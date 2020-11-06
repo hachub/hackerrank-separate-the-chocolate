@@ -36,6 +36,8 @@ def separate_the_chocolate(m, n, k, chocolate):
             if num[color] - one_num == 0:
                 res += 1
     return res
-
+    # TODO учесть что квадраты не считаем
+    # TODO учесть параметр k
 
 print(separate_the_chocolate(2, 2, 4, 'UUUU'))
+print(separate_the_chocolate(3, 3, 4, 'UUUUUUUUU'))
