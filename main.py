@@ -1,5 +1,8 @@
 # https://www.hackerrank.com/challenges/separate-the-chocolate/problem
 
+def is_satisfy_for_k(x, y, n, k):
+    return n * n - (x + 1) * (y + 1) <= k
+
 
 def separate_the_chocolate(m, n, k, chocolate):
     num = {'D': 0, 'T': 0}
@@ -13,6 +16,7 @@ def separate_the_chocolate(m, n, k, chocolate):
             num['T'] += 1 if val == 'T' else 0
     vecs = ((0, 0, 1, 1, 0), (0, n - 1, 1, -1, 1), (m - 1, 0, -1, 1, 1), (m - 1, n - 1, -1, -1, 0))
     res = 0
+    stop = {'D': False, 'T': False}
     for vec in vecs:
         colors = ('D', 'T') if v[vec[0]][vec[1]] == 'U' else (v[vec[0]][vec[1]])
         cnum = {}
@@ -29,15 +33,23 @@ def separate_the_chocolate(m, n, k, chocolate):
                             x_max = x
                             break
                         if cnum[color] == 0:
-                            res += 1
+                            if is_satisfy_for_k(x, y, n, k):
+                                res += 1
+                            print("x: %d, y: %d" % (x, y))
                     col += vec[3]
                 row += vec[2]
+
             one_num = 1 if v[vec[0]][vec[1]] == color else 0
             if num[color] - one_num == 0:
-                res += 1
+                if is_satisfy_for_k(0, 0, n, k) and not stop[color]:
+                    res += 1
+                    if n == 1:
+                        stop[color] = True
     return res
-    # TODO учесть что квадраты не считаем
-    # TODO учесть параметр k
+    # TODO need to consider that there are no squares in summary
+    # TODO need to consider parameter k
 
-print(separate_the_chocolate(2, 2, 4, 'UUUU'))
-print(separate_the_chocolate(3, 3, 4, 'UUUUUUUUU'))
+
+print(separate_the_chocolate(1, 1, 1, 'U'))
+print(separate_the_chocolate(2, 2, 0, 'UUUU'))
+print(separate_the_chocolate(3, 3, 6, 'UUUUUUUUU'))

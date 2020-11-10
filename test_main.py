@@ -6,3 +6,4 @@ def test_one():
     result = separate_the_chocolate(2, 2, 4, chocolate)
     assert result == 12
 
+
